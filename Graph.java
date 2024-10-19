@@ -12,7 +12,7 @@ public class Graph{
         if(!graph.containsKey(v1)){
             Addvertex(v1);
         }
-        if(!graph.containsKey(v1)){
+        if(!graph.containsKey(v2)){
             Addvertex(v2);
         }
         graph.get(v1).put(v2,w);
