@@ -1,6 +1,14 @@
 import java.util.*;
 
 public class Graph_Implementation_Generic_Class<V>{
+    public class Node{
+        V key;
+        HashMap<V,Integer> neigh;
+        public Node(V key, HashMap<V,Integer> neigh){
+            this.key=key;
+            this.neigh=neigh;
+        }
+    }
     HashMap<V,HashMap<V,Integer>> graph;
     public Graph_Implementation_Generic_Class(){
         this.graph=new HashMap<>();
@@ -102,6 +110,22 @@ public class Graph_Implementation_Generic_Class<V>{
         visited.remove(vertex1);
         return count;
     }
+    public void BFS(V vertex1){
+        Queue<Node> q=new LinkedList<>();
+        HashSet<V> visited=new HashSet<>();
+        q.add(new Node(vertex1,graph.get(vertex1)));
+        visited.add(vertex1);
+        while(!q.isEmpty()){
+            Node curr=q.poll();
+            System.out.print(curr.key+" ");
+            for(V adj:curr.neigh.keySet()){
+                if(!visited.contains(adj)){
+                    q.add(new Node(adj,graph.get(adj)));
+                    visited.add(adj);
+                }
+            }
+        }
+    }
     public static void main(String args[]){
         Graph_Implementation_Generic_Class<Integer> graph=new Graph_Implementation_Generic_Class<>();
         graph.AddEdge(1, 2, 0);
@@ -124,5 +148,6 @@ public class Graph_Implementation_Generic_Class<V>{
         System.out.println(graph.PathCount(1, 4, new HashSet<>()));
         System.out.println(graph.PathCount(1, 6, new HashSet<>()));
         System.out.println(graph.PathCount(1, 5, new HashSet<>()));
+        graph.BFS(1);
     }
 }
