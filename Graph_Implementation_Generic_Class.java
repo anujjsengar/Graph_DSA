@@ -124,8 +124,5 @@ public class Graph_Implementation_Generic_Class<V>{
         System.out.println(graph.PathCount(1, 4, new HashSet<>()));
         System.out.println(graph.PathCount(1, 6, new HashSet<>()));
         System.out.println(graph.PathCount(1, 5, new HashSet<>()));
-
-        
-
     }
 }
