@@ -64,18 +64,29 @@ public class Graph_Implementation_Generic_Class<V>{
         }
         return false;
     }
-    public boolean PrintPath(V vertex1,V vertex2,Set<V> visited,String ans){
-        if(graph.get(vertex1).containsKey(vertex2)){
+    public void PrintPath(V vertex1,V vertex2,Set<V> visited,String ans){
+        if(vertex1.equals(vertex2)){
             System.out.println(ans+vertex2);
-            return true;
+            return ;
         }
         visited.add(vertex1);
         for(V vertex:graph.get(vertex1).keySet()){
-            if(!visited.contains(vertex) && PrintPath(vertex, vertex2, visited, ans+vertex)){
-                return true;
+            if(!visited.contains(vertex)){
+                PrintPath(vertex, vertex2, visited, ans+vertex1+"--->");
             }
         }
-        return false;
+    }
+    public void PrintAllPath(V vertex1,V vertex2,Set<V> visited,String ans){
+        if(vertex1.equals(vertex2)){
+            System.out.println(ans+vertex2);
+        }
+        visited.add(vertex1);
+        for(V vert:graph.get(vertex1).keySet()){
+            if(!visited.contains(vert)){
+                PrintAllPath(vert, vertex2, visited, ans+vertex1+"--->");
+            }
+        }
+        visited.remove(vertex1);
     }
     public static void main(String args[]){
         Graph_Implementation_Generic_Class<Integer> graph=new Graph_Implementation_Generic_Class<>();
@@ -86,10 +97,12 @@ public class Graph_Implementation_Generic_Class<V>{
         graph.AddEdge(3, 4, 0);
         graph.AddEdge(3, 5, 0);
         graph.AddEdge(4, 6, 0);
+        graph.AddEdge(1, 6, 0);
         System.out.println(graph.VertexCount());
         System.out.println(graph.EdgeCount());
         graph.AllEdgePrint();
         System.out.println(graph.IsPath(1, 5,new HashSet<>()));
-        graph.PrintPath(1, 6, new HashSet<>(),1+"");
+        graph.PrintPath(1, 6, new HashSet<>(),"");
+        graph.PrintAllPath(1, 4, new HashSet<>(),"");
     }
 }
