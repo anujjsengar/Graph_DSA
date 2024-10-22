@@ -88,6 +88,20 @@ public class Graph_Implementation_Generic_Class<V>{
         }
         visited.remove(vertex1);
     }
+    public int PathCount(V vertex1,V vertex2,Set<V> visited){
+        int count=0;
+        if(vertex1.equals(vertex2)){
+            return 1;
+        }
+        visited.add(vertex1);
+        for(V neigh:graph.get(vertex1).keySet()){
+            if(!visited.contains(neigh)){
+                count=count+PathCount(neigh, vertex2, visited);
+            }
+        }
+        visited.remove(vertex1);
+        return count;
+    }
     public static void main(String args[]){
         Graph_Implementation_Generic_Class<Integer> graph=new Graph_Implementation_Generic_Class<>();
         graph.AddEdge(1, 2, 0);
@@ -102,7 +116,16 @@ public class Graph_Implementation_Generic_Class<V>{
         System.out.println(graph.EdgeCount());
         graph.AllEdgePrint();
         System.out.println(graph.IsPath(1, 5,new HashSet<>()));
+        System.out.println(graph.IsPath(1, 7,new HashSet<>()));
         graph.PrintPath(1, 6, new HashSet<>(),"");
         graph.PrintAllPath(1, 4, new HashSet<>(),"");
+        graph.PrintAllPath(1, 6, new HashSet<>(),"");
+        graph.PrintAllPath(1, 5, new HashSet<>(),"");
+        System.out.println(graph.PathCount(1, 4, new HashSet<>()));
+        System.out.println(graph.PathCount(1, 6, new HashSet<>()));
+        System.out.println(graph.PathCount(1, 5, new HashSet<>()));
+
+        
+
     }
 }
