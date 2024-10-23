@@ -42,5 +42,10 @@ public class GraphClient<V> extends Graph_Implementation_Generic_Class<V>{
         graph.DFS(1);
         System.out.println();
         graph.DFS(4);
+        GraphClient<Integer> graph2=new GraphClient<>();
+        graph2.AddEdge(1,3, 0);
+        System.out.println();
+        System.out.println("Detect Cycle");
+        graph2.IsCycleUndirectedGraph(1);
     }
 }

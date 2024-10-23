@@ -142,16 +142,61 @@ public class Graph_Implementation_Generic_Class<V>{
             }
         }
     }
+    public void ShortestPathByEdge(V vertex1,V vertex2){
+        System.out.println(this.ShortestPathByEdge(vertex1, vertex2, 0, "", Integer.MAX_VALUE, "",new HashSet<>()));
+    }
+    private String ShortestPathByEdge(V vertex1, V vertex2, int ne, String ans, int prevne, String prevans, HashSet<V> visited) {
+        if (vertex1.equals(vertex2)) {
+            ans = ans + vertex2;
+            if (ne < prevne) {
+                prevne = ne;
+                prevans = ans;
+            }
+            return prevans;
+        }
+        visited.add(vertex1);
+        for (V neigh : graph.get(vertex1).keySet()) {
+            if (!visited.contains(neigh)) {
+                String tempAns = ShortestPathByEdge(neigh, vertex2, ne + 1, ans + vertex1 + "--> ", prevne, prevans, visited);
+                if (tempAns != null && tempAns.length() < prevans.length()) {
+                    prevans = tempAns;
+                }
+            }
+        }
+        visited.remove(vertex1);
+        return prevans;
+    }
+    
+    public void IsCycleUndirectedGraph(V vertex){
+         System.out.println(this.IsCycleUndirectedGraph(vertex,new HashSet<>(),new HashMap<>()));
+    }
+    private boolean IsCycleUndirectedGraph(V vertex, HashSet<V> visited, HashMap<V, V> parentMap) {
+        visited.add(vertex);
+    
+        for (V neigh : graph.get(vertex).keySet()) {
+            if (!visited.contains(neigh)) {
+                parentMap.put(neigh, vertex);
+                if (IsCycleUndirectedGraph(neigh, visited, parentMap)) {
+                    return true;
+                }
+            } 
+            else if (!neigh.equals(parentMap.get(vertex))) {
+                return true;
+            }
+        }
+    
+        return false;
+    }
+    
     public static void main(String args[]){
         Graph_Implementation_Generic_Class<Integer> graph=new Graph_Implementation_Generic_Class<>();
         graph.AddEdge(1, 2, 0);
-        graph.AddEdge(1, 3, 0);
-        graph.AddEdge(1, 5, 0);
-        graph.AddEdge(2, 4, 0);
+        graph.AddEdge(1, 4, 0);
+        graph.AddEdge(2, 3, 0);
+        graph.AddEdge(4, 5, 0);
         graph.AddEdge(3, 4, 0);
-        graph.AddEdge(3, 5, 0);
-        graph.AddEdge(4, 6, 0);
-        graph.AddEdge(1, 6, 0);
+        graph.AddEdge(5, 6, 0);
+        graph.AddEdge(6, 7, 0);
         System.out.println(graph.VertexCount());
         System.out.println(graph.EdgeCount());
         System.out.println();
@@ -183,5 +228,8 @@ public class Graph_Implementation_Generic_Class<V>{
         graph.DFS(1);
         System.out.println();
         graph.DFS(4);
+        System.out.println();
+        System.out.println("Detect Cycle");
+        graph.IsCycleUndirectedGraph(1);
     }
 }
