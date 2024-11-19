@@ -4,7 +4,7 @@ public class Bellman_Ford<V> extends Graph_Implementation_Generic_Class<V>{
     public Bellman_Ford(){
         super();
     }
-    public class pair{
+    private class pair{
         V vertex1;
         V vertex2;
         int weight;
