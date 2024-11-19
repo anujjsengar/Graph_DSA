@@ -26,6 +26,15 @@ public class Graph_Implementation_Generic_Class<V>{
         graph.get(vertex1).put(vertex2,weight);
         graph.get(vertex2).put(vertex1,weight);
     }
+    public void AddEdgeDirected(V vertex1,V vertex2,int weight){
+        if(!graph.containsKey(vertex1)){
+            AddVertex(vertex1);
+        }
+        if(!graph.containsKey(vertex2)){
+            AddVertex(vertex2);
+        }
+        graph.get(vertex1).put(vertex2,weight);
+    }
     public void RemoveEdge(V vertex1,V vertex2){
         if(graph.get(vertex1).containsKey(vertex2)){
             graph.get(vertex1).remove(vertex2);
